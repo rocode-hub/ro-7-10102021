@@ -1,13 +1,13 @@
 /* --------------------------------------------------------------------------------
-object  ... groupomania / main module
+app   ...   Groupomania intra social network
+mod   ...   Main
 -------------------------------------------------------------------------------- */
+
 const express = require('express');                     // express
 require('dotenv').config();                             // variables d'environnement
 const path = require('path');
 
-const db = require('./dbmysql');
-//const sauceRoutes = require('./js/routes/sauce');
-//const userRoutes = require('./js/routes/user');
+const usersRoutes = require('./routes/users');
 
 // CORS
 const app = express();
@@ -20,19 +20,7 @@ app.use((req, res, next) => {
 
 app.use(express.json());                                // parser
 
-// Test connexion base de données
-const dbsql = db.pool();
-dbsql.getConnection(function(err, con) {
-    if (err) {
-        console.error('Test : erreur de connexion à la base de données: ' + err.stack);
-        return;
-    }
-    console.log('Test de connexion à la base de données : OK');
-    dbsql.end();
-});
-
 app.use('/pics', express.static(path.join(__dirname, 'pics')));
-//app.use('/api/sauces', sauceRoutes);
-//app.use('/api/auth', userRoutes);
+app.use('/api/users', usersRoutes);
 
 module.exports = app;

@@ -1,6 +1,8 @@
 /* --------------------------------------------------------------------------------
-object  ... groupomania / server module
+app   ...   Groupomania intra social network
+mod   ...   SERVER
 -------------------------------------------------------------------------------- */
+
 const http = require('http');
 const app = require('./app');
 

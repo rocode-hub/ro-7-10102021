@@ -1,14 +1,17 @@
-const mysql = require('mysql');
+/* --------------------------------------------------------------------------------
+app   ...   Groupomania intra social network
+mod   ...   MYSQL DATABASE CONNECTION
+-------------------------------------------------------------------------------- */
+
+const {createPool} = require('mysql');
     
-exports.pool = () => {
-    const dbpool = mysql.createPool({
-        host     : process.env.DBHOST,
-        port     : process.env.DBPORT,
-        user     : process.env.DBUSER,
-        password : process.env.DBPWD,
-        database : process.env.DBBASENAME,
-        charset  : process.env.DBCHARSET,
-        connectionLimit: 10
-    })
-    return dbpool
-}
+const pool = createPool({
+    host     : process.env.DBHOST,
+    port     : process.env.DBPORT,
+    user     : process.env.DBUSER,
+    password : process.env.DBPWD,
+    database : process.env.DBNAME,
+    charset  : process.env.DBCHARSET
+})
+
+module.exports = pool;

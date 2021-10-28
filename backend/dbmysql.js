@@ -5,7 +5,7 @@ mod   ...   MYSQL DATABASE CONNECTION
 
 const {createPool} = require('mysql');
     
-const pool = createPool({
+module.exports = createPool({
     host     : process.env.DBHOST,
     port     : process.env.DBPORT,
     user     : process.env.DBUSER,
@@ -13,5 +13,3 @@ const pool = createPool({
     database : process.env.DBNAME,
     charset  : process.env.DBCHARSET
 })
-
-module.exports = pool;

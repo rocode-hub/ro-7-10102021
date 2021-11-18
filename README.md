@@ -2,7 +2,7 @@
 
 ## Créez un réseau social d’entreprise
 
-<div align="center" style="margin-top: 40px"><img src="https://github.com/rocode-hub/ro-7-10102021/blob/main/frontend/src/assets/icon-left-font-monochrome-white.svg"/></div>
+<div align="center" style="margin-top: 40px"><img src="https://github.com/rocode-hub/ro-7-10102021/blob/main/frontend/src/assets/pics/icon-left-font-monochrome-white.svg"/></div>
 
 
 
@@ -24,10 +24,9 @@ Réaliser un MVP ( Produit Minimal Viable ) pour la création d’un réseau soc
 
 - Node
 - Express
-- Vue
+- Framework front ( React, Angular, Vue, ... )
 - mySQL
 - WCAG
-
 
 
 ##### <ins>La base de données</ins>

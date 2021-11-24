@@ -6,6 +6,7 @@ mod   ...   VUE LOGIN
 <template>
     <FormulateForm
         name="login"
+        v-model="valuesLogin"
         @submit="clickLogin"
     >
         <div class="headlogo">
@@ -19,6 +20,7 @@ mod   ...   VUE LOGIN
             <p v-else>CREATION DE COMPTE</p>
         </div>
         <FormulateInput
+            autofocus
             type="email"
             name="email"
             placeholder="login"
@@ -48,7 +50,7 @@ mod   ...   VUE LOGIN
         />
         <FormulateInput v-if="mode === 0"
             type="password"
-            name="confirmpwd"
+            name="pwdconfirm"
             placeholder="confirmation mot de passe"
             title="Le mot de passe doit contenir au mininum 8 caractères avec au moins une lettre minuscule, une lettre majuscule, un chiffre et un des caractères spéciaux suivants !@_#%"
             :validation-messages="{
@@ -73,39 +75,42 @@ mod   ...   VUE LOGIN
 
 <script>
 
-    //import { mapState } from 'vuex'
+//    import { mapState } from 'vuex'
     export default {
         name: 'Login',
         data: function () {
             return {
                 mode: 1,        // mode : 1 connexion / 0 create account
-                email: '',
-                password: '',
+                valuesLogin: {
+                    email: '',
+                    pwd: '',
+                    pwdconfirm:'',
+                }
             }
         },
         methods: {
-           switchToCreateAccount: function () {
+           switchToCreateAccount() {
                 this.mode = 0;
             },
-            switchToLogin: function () {
+            switchToLogin() {
                 this.mode = 1;
             },
-            clickLogin: function() {
+            clickLogin() {
                 if (this.mode === 1) {
-                    console.log('step 1');
-                    this.$store.dispatch("LOGIN", {
-                        email: this.email,
-                        pwd: this.password
-                    })
-                    .then(success => {
-                        success;
-                        this.$router.push('')
-                    })
-                    .catch(error => {
-                        error;
-                        this.error = true;
-                    })     
-                    window.location.reload('true');
+                    return this.$store.dispatch("LOGIN", this.valuesLogin)
+                        .then ( response => {
+                            if ( response.status === 200 ) {
+                                console.log('ok'); 
+                            }
+                        })
+                        .catch ( err => {
+                            if ( err === 401 ) {
+                                alert( 'les identifiants sont invalides' );
+                            } else {
+                                alert( 'La requête d\'identification n\'a pas aboutie, veuillez réessayer s\'il vous plaît.' );
+                            }
+                            window.location.reload('true');
+                        })
                 }
             }
         }

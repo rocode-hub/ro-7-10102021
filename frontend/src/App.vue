@@ -12,7 +12,9 @@ mod   ...   VUE APP
 <script>
     export default {
         name: 'App',
-        components: {}
+        data: function () {
+            return {}
+        }
     }
 </script>
 
@@ -24,13 +26,29 @@ mod   ...   VUE APP
     * {
         margin:0;
         padding: 0;
+        border: 0;
         box-sizing: border-box;
     }
-
+    html {
+        scroll-behavior: smooth;
+    }
+    body {
+        animation: fadeIn ease 600ms;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
     #app {
         height: 100%;
         width: 100%;
-        min-width: 320px;
+        min-width: 300px;
         font-family: Roboto, Helvetica, Arial, sans-serif;
         color: $color-gpmania-text-primary;
         background: $color-gpmania-back-primary;
@@ -38,7 +56,8 @@ mod   ...   VUE APP
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         display: flex;
-        flex-flow: row wrap;
+        flex-direction: column;
+        align-items: center;
         justify-content: center;
     }
 </style>

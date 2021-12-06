@@ -12,7 +12,13 @@ const state = {
 }
 
 const getters = {
-
+    GET_USERLOGGED (state) {
+        return JSON({
+            id: state.userLogged.id,
+            isadmin: state.userLogged.isadmin,
+            token: state.userLogged.token
+        });
+    }
 }
 
 const mutations = {
@@ -24,36 +30,28 @@ const mutations = {
 }
 
 const actions = {
-    async LOGIN (store, payload) {
+    async LOGINCREATE (store, optionsFetch) {
+        const mode = JSON.parse(optionsFetch.body).mode;
+        const url = 'http://localhost:3000/api/users/' + ((mode === 1) ? 'login' : 'signup');
         return new Promise((resolve, reject) => {
-            const optLogin = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json; charset=UTF-8'
-                },
-                body: JSON.stringify({
-                    email: payload.email,
-                    pwd: payload.pwd,
-                })
-            };
-            return fetch('http://localhost:3000/api/users/login', optLogin )
+            return fetch(url, optionsFetch)
                 .then( response => {
-                    let result = response.status;
-                    if( response.status === 200 ) {
-                        response.json()
+                    if( response.ok ) {
+                        if (mode === 1) {
+                            response.json()
                             .then( data => {
                                 store.commit('STORE_USERLOGGED', data);
-                                resolve( { status: 200 } );
                             });
+                        }
+                        resolve( { status: 200 } );
                     } else {
-                        reject( result );
+                        reject( response.status );
                     }
                 })
                 .catch( error => reject(error))
         });
     }
 }
-
 
 export default {
     state: state,

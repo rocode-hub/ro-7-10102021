@@ -1,10 +1,11 @@
 <!-- ------------------------------------------------------------------------------
 app   ...   Groupomania intra social network
-mod   ...   VUE LOGIN
+mod   ...   VUE VIEW LOGIN
 ------------------------------------------------------------------------------- -->
 
 <template>
     <FormulateForm
+        id="loginform"
         name="login"
         v-model="valuesLogin"
         @submit="clickLogin"
@@ -16,7 +17,7 @@ mod   ...   VUE LOGIN
             réseau  social  intern<span>e</span>
         </div>
         <div class="titlewin">
-            <p v-if="mode === 1">CONNEXION</p>
+            <p v-if="startMode === 1">CONNEXION</p>
             <p v-else>CREATION DE COMPTE</p>
         </div>
         <FormulateInput
@@ -48,7 +49,7 @@ mod   ...   VUE LOGIN
                 pwdcar: `Le mot de passe ne respecte pas les règles.`
             }"
         />
-        <FormulateInput v-if="mode === 0"
+        <FormulateInput v-if="startMode === 0"
             type="password"
             name="pwdconfirm"
             placeholder="confirmation mot de passe"
@@ -58,8 +59,8 @@ mod   ...   VUE LOGIN
             }"
         />
         <div class="button">
-            <a class="btnlink" v-if="mode === 1" href="javascript:alert('Un email vous a été envoyé avec un nouveau mot de passe.')">mot de passe oublié ?</a>
-            <FormulateInput v-if="mode === 1"
+            <a class="btnlink" v-if="startMode === 1" href="javascript:alert('Un email vous a été envoyé avec un nouveau mot de passe.')">mot de passe oublié ?</a>
+            <FormulateInput v-if="startMode === 1"
                 type="submit"
                 label="je me connecte"
             />
@@ -67,7 +68,7 @@ mod   ...   VUE LOGIN
                 type="submit"
                 label="je crée mon compte"
             />
-            <span class="btnlink" v-if="mode === 1" @click="switchToCreateAccount()">créer un compte</span>
+            <span class="btnlink" v-if="startMode === 1" @click="switchToCreateAccount()">créer un compte</span>
             <span class="btnlink" v-else @click="switchToLogin()">je me connecte avec un compte existant</span>
         </div>
     </FormulateForm>
@@ -80,7 +81,7 @@ mod   ...   VUE LOGIN
         name: 'Login',
         data: function () {
             return {
-                mode: 1,        // mode : 1 connexion / 0 create account
+                startMode: 1,        // mode : 1 connexion / 0 create account
                 valuesLogin: {
                     email: '',
                     pwd: '',
@@ -90,28 +91,51 @@ mod   ...   VUE LOGIN
         },
         methods: {
            switchToCreateAccount() {
-                this.mode = 0;
+                this.startMode = 0;
             },
             switchToLogin() {
-                this.mode = 1;
+                this.startMode = 1;
             },
             clickLogin() {
-                if (this.mode === 1) {
-                    return this.$store.dispatch("LOGIN", this.valuesLogin)
-                        .then ( response => {
-                            if ( response.status === 200 ) {
-                                console.log('ok'); 
-                            }
-                        })
-                        .catch ( err => {
-                            if ( err === 401 ) {
-                                alert( 'les identifiants sont invalides' );
-                            } else {
-                                alert( 'La requête d\'identification n\'a pas aboutie, veuillez réessayer s\'il vous plaît.' );
-                            }
-                            window.location.reload('true');
-                        })
+                if (this.startMode === 0 && !(this.valuesLogin.pwd === this.valuesLogin.pwdconfirm)) {
+                    alert( 'Les mots de passe saisis sont différents !');
+                    return;
                 }
+                const optionsFetch = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    },
+                    body: JSON.stringify({
+                        email: this.valuesLogin.email,
+                        pwd: this.valuesLogin.pwd,
+                        mode: this.startMode,
+                    }),
+                };
+                return this.$store.dispatch('LOGINCREATE', optionsFetch)
+                    .then ( response => {
+                        if ( response.status === 200 ) {
+                            if (this.startMode === 1) {
+                                this.$router.push('/home');
+                            } else {
+                                alert('Le compte est créé.\n'
+                                    + 'Vous allez recevoir un mail de confirmation.\n'
+                                    + 'Vous pouvez dès à présent vous connecter.'); 
+                                window.location.reload('true');
+                           } 
+                        }
+                    })
+                    .catch ( err => {
+                        if ( err === 400 ) {
+                            alert( 'Un compte avec ce login existe déjà !' );
+                        } else if ( err === 401 ) {
+                            alert( 'Les identifiants saisis sont invalides' );
+                        } else {
+                            alert('Erreur interne. La requête n\'a pas aboutie.\n'
+                                + 'Veuillez réessayer s\'il vous plaît.');
+                        }
+                        window.location.reload('true');
+                    })
             }
         }
     }
@@ -119,14 +143,14 @@ mod   ...   VUE LOGIN
 
 <style lang="scss">
     @import "../assets/css/variables";
-    
-    .headlogo {
-        max-width: 300px;
-        max-height: 160px;
+    #loginform {
+        width: 300px;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow-y: hidden;
+        flex-direction: column;
+    }
+    .headlogo {
+        margin-top: -3rem;
+        margin-bottom: -4rem;
     }
     .titleapp {
         font-size: 1rem;
@@ -142,7 +166,7 @@ mod   ...   VUE LOGIN
         min-width: 300px;
         margin-top: 1rem;
         margin-bottom: 1rem;
-        color: $color-gpmania-text-secondary;
+        color: $color-gpmania-text-primary;
         font-size: 1.4rem;
         font-weight: 700;
         line-height: 3rem;
@@ -155,7 +179,7 @@ mod   ...   VUE LOGIN
     }
     .btnlink {
         font-size: 0.7rem;
-        color: $color-gpmania-text-secondary;
+        color: $color-gpmania-text-primary;
         text-decoration: underline;
         cursor: pointer;
         margin-bottom: 1rem;

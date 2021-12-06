@@ -8,6 +8,7 @@ require('dotenv').config();                             // variables d'environne
 const path = require('path');
 
 const usersRoutes = require('./routes/users');
+const pubsRoutes = require('./routes/pubs');
 
 // CORS
 const app = express();
@@ -22,7 +23,8 @@ app.use(
 
 app.use(express.json());                                // parser
 
-app.use('/pics', express.static(path.join(__dirname, 'pics')));
+app.use('/picspubs', express.static(path.join(__dirname, 'pics/pubs')));
 app.use('/api/users', usersRoutes);
+app.use('/api/pubs', pubsRoutes);
 
 module.exports = app;

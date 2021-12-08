@@ -17,7 +17,7 @@ mod   ...   VUE VIEW LOGIN
             réseau  social  intern<span>e</span>
         </div>
         <div class="titlewin">
-            <p v-if="startMode === 1">CONNEXION</p>
+            <p v-if="startMode">CONNEXION</p>
             <p v-else>CREATION DE COMPTE</p>
         </div>
         <FormulateInput
@@ -49,7 +49,7 @@ mod   ...   VUE VIEW LOGIN
                 pwdcar: `Le mot de passe ne respecte pas les règles.`
             }"
         />
-        <FormulateInput v-if="startMode === 0"
+        <FormulateInput v-if="!startMode"
             type="password"
             name="pwdconfirm"
             placeholder="confirmation mot de passe"
@@ -59,8 +59,8 @@ mod   ...   VUE VIEW LOGIN
             }"
         />
         <div class="button">
-            <a class="btnlink" v-if="startMode === 1" href="javascript:alert('Un email vous a été envoyé avec un nouveau mot de passe.')">mot de passe oublié ?</a>
-            <FormulateInput v-if="startMode === 1"
+            <a class="btnlink" v-if="startMode" href="javascript:alert('Un email vous a été envoyé avec un nouveau mot de passe.')">mot de passe oublié ?</a>
+            <FormulateInput v-if="startMode"
                 type="submit"
                 label="je me connecte"
             />
@@ -68,7 +68,7 @@ mod   ...   VUE VIEW LOGIN
                 type="submit"
                 label="je crée mon compte"
             />
-            <span class="btnlink" v-if="startMode === 1" @click="switchToCreateAccount()">créer un compte</span>
+            <span class="btnlink" v-if="startMode" @click="switchToCreateAccount()">créer un compte</span>
             <span class="btnlink" v-else @click="switchToLogin()">je me connecte avec un compte existant</span>
         </div>
     </FormulateForm>
@@ -76,12 +76,11 @@ mod   ...   VUE VIEW LOGIN
 
 <script>
 
-//    import { mapState } from 'vuex'
     export default {
         name: 'Login',
         data: function () {
             return {
-                startMode: 1,        // mode : 1 connexion / 0 create account
+                startMode: true,        // mode : true connexion / false create account
                 valuesLogin: {
                     email: '',
                     pwd: '',
@@ -91,13 +90,13 @@ mod   ...   VUE VIEW LOGIN
         },
         methods: {
            switchToCreateAccount() {
-                this.startMode = 0;
+                this.startMode = false;
             },
             switchToLogin() {
-                this.startMode = 1;
+                this.startMode = true;
             },
             clickLogin() {
-                if (this.startMode === 0 && !(this.valuesLogin.pwd === this.valuesLogin.pwdconfirm)) {
+                if (!this.startMode && !(this.valuesLogin.pwd === this.valuesLogin.pwdconfirm)) {
                     alert( 'Les mots de passe saisis sont différents !');
                     return;
                 }
@@ -112,10 +111,10 @@ mod   ...   VUE VIEW LOGIN
                         mode: this.startMode,
                     }),
                 };
-                return this.$store.dispatch('LOGINCREATE', optionsFetch)
+                return this.$store.dispatch('LOGSIGN', optionsFetch)
                     .then ( response => {
                         if ( response.status === 200 ) {
-                            if (this.startMode === 1) {
+                            if (this.startMode) {
                                 this.$router.push('/home');
                             } else {
                                 alert('Le compte est créé.\n'

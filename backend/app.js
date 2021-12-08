@@ -26,5 +26,6 @@ app.use(express.json());                                // parser
 app.use('/picspubs', express.static(path.join(__dirname, 'pics/pubs')));
 app.use('/api/users', usersRoutes);
 app.use('/api/pubs', pubsRoutes);
+//app.use('api/answ', answRoutes);
 
 module.exports = app;

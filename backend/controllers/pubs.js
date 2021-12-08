@@ -6,7 +6,6 @@ mod   ...   PUBLICATIONS CONTROLLERS
 const jsonwt = require('jsonwebtoken');
 const db = require('../dbmysql');
 const fs = require('fs');
-const { syncBuiltinESMExports } = require('module');
 
 /* Création Publication
 -------------------------------------------------------------------------------- */
@@ -37,7 +36,7 @@ exports.newPub = (req, res, next) => {
 
 /* Création Answer
 -------------------------------------------------------------------------------- */
-exports.newPub = (req, res, next) => {
+exports.newAns = (req, res, next) => {
 
     const sqltext = 'INSERT INTO comments VALUES (?, ?, ?, ?)';
     const createat = new Date();

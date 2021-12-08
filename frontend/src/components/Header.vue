@@ -17,7 +17,7 @@ mod   ...   VUE COMPONENT HEADER
                 <ul class="menu">
                     <li><a href="#">Accueil</a></li>
                     <li><a href="#">Compte</a></li>
-                    <li><a href="#">Administration</a></li>
+                    <li v-if="currentUser.isadmin"><a href="#">Administration</a></li>
                     <li><a href="#">Déconnexion</a></li>
                 </ul>
             </nav>
@@ -26,10 +26,16 @@ mod   ...   VUE COMPONENT HEADER
 </template>
 
 <script>
+    import { mapState } from 'vuex'
     export default {
         name: 'Header',
         data: function () {
             return {}
+        },
+        computed: {
+            ...mapState({
+                currentUser: state => state.user.userLogged
+            })
         }
     }
 </script>

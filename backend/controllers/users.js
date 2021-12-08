@@ -4,7 +4,7 @@ mod   ...   USERS CONTROLLERS
 -------------------------------------------------------------------------------- */
 
 const bcrypt = require('bcrypt');
-const jsonwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const db = require('../dbmysql');
 
 /* Création
@@ -40,22 +40,25 @@ exports.login = (req, res) => {
     const sqltext = 'SELECT id, pwd, isadmin FROM users WHERE email= ?';
     const sqlparams = [req.body.email];
 
-    db.query(sqltext, sqlparams, (err, sqlres) => {
+    db.query(sqltext, sqlparams, (err, sqlrows) => {
         if (err) {        
             return res.status(400).json({ err });
-        } else if (sqlres.length == 0) {
+        } else if (sqlrows.length == 0) {
             return res.status(401).json({ error: 'Identifiants invalides' });
         } else { 
-            bcrypt.compare(req.body.pwd, sqlres[0].pwd)
+            bcrypt.compare(req.body.pwd, sqlrows[0].pwd)
                 .then(
                     (valid) => {
                         if (!valid) {
                             res.status(401).json({ error: 'Identifiants invalides' });
                         } else {
                             res.status(200).json({
-                                token: jsonwt.sign(
-                                    { userId: sqlres[0].id,
-                                      userAdmin: sqlres[0].isadmin },
+                                userId: sqlrows[0].id,
+                                userAdmin: sqlrows[0].isadmin,
+                                token: jwt.sign(
+                                    { userId: sqlrows[0].id,
+                                      userLogin: req.body.email,
+                                      userAdmin: sqlrows[0].isadmin },
                                     process.env.TOKENSECRET,
                                     { expiresIn: '24h' }
                                 )
@@ -81,7 +84,7 @@ exports.getUser = (req, res, next) => {
 
     // récupération droits
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jsonwt.verify(token, process.env.TOKENSECRET);
+    const decodedToken = jwt.verify(token, process.env.TOKENSECRET);
     const userAdmin = decodedToken.userAdmin;
 
     // vérification droits
@@ -114,7 +117,7 @@ exports.delUser = (req, res, next) => {
 
     // récupération droits
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jsonwt.verify(token, process.env.TOKENSECRET);
+    const decodedToken = jwt.verify(token, process.env.TOKENSECRET);
     const userAdmin = decodedToken.userAdmin;
     
     // vérification droits

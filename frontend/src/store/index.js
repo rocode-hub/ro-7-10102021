@@ -10,6 +10,8 @@ Vue.use(VueFormulate)
 export default new Vuex.Store({
     state: {
     },
+    getters: {
+    },
     mutations: {
     },
     actions: {

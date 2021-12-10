@@ -4,28 +4,41 @@ mod   ...   VUE VIEW HOME
 ------------------------------------------------------------------------------- -->
 
 <template>
-    <div class="blankpage">
+    <div class="fullview">
         <Header></Header>
+        <div class="wrapper mt0400">
+            <h1 class="pagetitle">FORUM DES PUBLICATIONS</h1>
+            <FormulateInput
+                type="button"
+                label="ajouter une nouvelle publication"
+                @click="linknewpub()"
+            />
+            <Pubcard></Pubcard>
+        </div>
     </div>
 </template>
 
 <script>
     import Header from '../components/Header'
+    import Pubcard from '../components/Pubcard'
     export default {
         name: 'Home',
-        components: { Header },
+        components: { Header, Pubcard },
         data: function () {
             return {}
+        },
+        methods: {
+            linknewpub() {
+                localStorage.setItem('nav', 0);
+                this.$router.push('/home/pubnew');
+            }
         }
     }
 </script>
 
 <style lang="scss">
     @import "../assets/css/variables";
-    .blankpage {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
+    h1 {
+        font-size: 1.2rem;
     }
 </style>

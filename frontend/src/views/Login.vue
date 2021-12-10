@@ -10,7 +10,7 @@ mod   ...   VUE VIEW LOGIN
         v-model="valuesLogin"
         @submit="clickLogin"
     >
-        <div class="headlogo">
+        <div class="loginlogo">
             <img src="../assets/pics/icon-above-font.svg" />
         </div>
         <div class="titleapp">
@@ -58,7 +58,7 @@ mod   ...   VUE VIEW LOGIN
                 required: `Vous devez saisir un mot de passe.`,
             }"
         />
-        <div class="button">
+        <div class="btnsection">
             <a class="btnlink" v-if="startMode" href="javascript:alert('Un email vous a été envoyé avec un nouveau mot de passe.')">mot de passe oublié ?</a>
             <FormulateInput v-if="startMode"
                 type="submit"
@@ -89,14 +89,14 @@ mod   ...   VUE VIEW LOGIN
             }
         },
         methods: {
-           switchToCreateAccount() {
+            switchToCreateAccount() {
                 this.startMode = false;
             },
             switchToLogin() {
                 this.startMode = true;
             },
             clickLogin() {
-                if (!this.startMode && !(this.valuesLogin.pwd === this.valuesLogin.pwdconfirm)) {
+                if ( !this.startMode && !( this.valuesLogin.pwd === this.valuesLogin.pwdconfirm )) {
                     alert( 'Les mots de passe saisis sont différents !');
                     return;
                 }
@@ -111,29 +111,30 @@ mod   ...   VUE VIEW LOGIN
                         mode: this.startMode,
                     }),
                 };
-                return this.$store.dispatch('LOGSIGN', optionsFetch)
+                this.$store.dispatch( 'LOGSIGN', optionsFetch )
                     .then ( response => {
-                        if ( response.status === 200 ) {
-                            if (this.startMode) {
+                        if (response.status === 200) {
+                            if ( this.startMode ) {
+                                localStorage.setItem('nav', 1);
                                 this.$router.push('/home');
                             } else {
-                                alert('Le compte est créé.\n'
-                                    + 'Vous allez recevoir un mail de confirmation.\n'
-                                    + 'Vous pouvez dès à présent vous connecter.'); 
-                                window.location.reload('true');
+                                alert( 'Le compte est créé.\n'
+                                     + 'Vous allez recevoir un mail de confirmation.\n'
+                                     + 'Vous pouvez dès à présent vous connecter.'); 
+                                this.$router.go();
                            } 
                         }
                     })
                     .catch ( err => {
-                        if ( err === 400 ) {
+                        if (err === 400) {
                             alert( 'Un compte avec ce login existe déjà !' );
-                        } else if ( err === 401 ) {
+                        } else if (err === 401) {
                             alert( 'Les identifiants saisis sont invalides' );
                         } else {
-                            alert('Erreur interne. La requête n\'a pas aboutie.\n'
-                                + 'Veuillez réessayer s\'il vous plaît.');
+                            alert( 'Erreur interne. La requête n\'a pas aboutie.\n'
+                                 + 'Veuillez réessayer s\'il vous plaît.');
                         }
-                        window.location.reload('true');
+                        this.$router.go();
                     })
             }
         }
@@ -147,7 +148,7 @@ mod   ...   VUE VIEW LOGIN
         display: flex;
         flex-direction: column;
     }
-    .headlogo {
+    .loginlogo {
         margin-top: -3rem;
         margin-bottom: -4rem;
     }
@@ -171,7 +172,7 @@ mod   ...   VUE VIEW LOGIN
         line-height: 3rem;
         text-align: center;
     }
-    .button {
+    .btnsection {
         display: flex;
         align-items: center;
         flex-direction: column;

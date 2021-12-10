@@ -46,8 +46,8 @@ mod   ...   VUE APP
         }
     }
     #app {
-        height: 100%;
-        width: 100%;
+        min-height: 100vh;
+        width: 100vw;
         min-width: 300px;
         font-family: Roboto, Helvetica, Arial, sans-serif;
         color: $color-gpmania-text-primary;
@@ -56,8 +56,56 @@ mod   ...   VUE APP
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
     }
+    .fullview {
+        width: 100vw;
+        height: 100vh;
+        background: $color-gpmania-back-secondary;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .wrapper {
+        width: 100%;
+        max-width: 980px;
+        min-width: 300px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .mt0400 {
+        margin-top: 0.4rem;
+    }
+    .pagetitle {
+        width: 96%;
+        padding: 0 1rem 0.2rem;
+        border-bottom: 1px solid $color-gpmania-text-primary;
+        margin-bottom: 1rem;
+    }
+    .formtitle {
+        padding: 0 1rem 0.2rem;
+        border-bottom: 1px solid $color-gpmania-text-primary;
+        margin: 1rem;
+    }
+    h1 {
+        font-size: 1.1rem;
+        font-weight: normal;
+        color: $color-gpmania-text-primary;
+    }
+    h2 {
+        font-size: 1.2rem;
+        margin: 0.4rem 0;
+        color: $color-gpmania-primary;
+    }
+    .card {
+        width: 90%;
+        margin: 0 auto;
+        padding: 0.4rem;
+        background: $color-gpmania-back-primary;
+        border: 1px solid gainsboro;
+        border-radius: 0.2rem;
+    }
+
 </style>

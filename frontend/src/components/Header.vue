@@ -4,9 +4,9 @@ mod   ...   VUE COMPONENT HEADER
 ------------------------------------------------------------------------------- -->
 
 <template>
-    <header class="headband">
-        <div class="wrapper">
-            <div class="logo">
+    <header>
+        <div class="headwrapper">
+            <div class="headlogo">
                 <a href="#">
                     <img src="../assets/pics/icon-left-font.svg" />
                 </a>
@@ -15,10 +15,10 @@ mod   ...   VUE COMPONENT HEADER
                 <input type="checkbox" class="switch">
                 <div class="hamburger"></div>
                 <ul class="menu">
-                    <li><a href="#">Accueil</a></li>
-                    <li><a href="#">Compte</a></li>
-                    <li v-if="currentUser.isadmin"><a href="#">Administration</a></li>
-                    <li><a href="#">Déconnexion</a></li>
+                    <li><a href="#" @click="navdest(1)">Accueil</a></li>
+                    <li><a href="#" @click="navdest(2)">Compte</a></li>
+                    <li v-if="currentUser.isadmin" href="#" @click="navdest(3)"><a>Administration</a></li>
+                    <li><a href="#" @click="navdest(4)">Déconnexion</a></li>
                 </ul>
             </nav>
         </div>
@@ -35,7 +35,39 @@ mod   ...   VUE COMPONENT HEADER
         computed: {
             ...mapState({
                 currentUser: state => state.user.userLogged
-            })
+            }),
+        },
+        methods: {
+            navdest(num) {
+                const currentnav = localStorage.getItem('nav');
+                switch (num) {
+                    case 1 :
+                        if (currentnav != 1) {
+                            localStorage.setItem('nav', 1);
+                            this.$router.push('/home');
+                        }
+                        break;
+                    case 2 :
+                        if (currentnav != 2) {
+                            localStorage.setItem('nav', 2);
+                        }
+                        break;
+                    case 3 :
+                        if (currentnav != 3) {
+                            localStorage.setItem('nav', 3);
+                        }
+                        break;
+                    case 4 :
+                        this.$store.dispatch('RESETSTATE')
+                            .then( () => {
+                                localStorage.clear();
+                                this.$router.push('/')
+                                    .then( () => {
+                                        this.$router.go();
+                                    })
+                            })
+                }
+            }
         }
     }
 </script>
@@ -45,14 +77,16 @@ mod   ...   VUE COMPONENT HEADER
     header {
         width: 100%;
         height: 56px;
+        background: $color-gpmania-back-primary;
         display: flex;
         justify-content: center;
         margin-bottom: 0.5rem;
         box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12),0px 2px 4px -1px rgba(0,0,0,0.2);
     }
-    .wrapper {
+    .headwrapper {
         position: relative;
-        width: 980px;
+        width: 100%;
+        max-width: 980px;
         min-width: 300px;
         display: flex;
         justify-content: space-between;
@@ -60,12 +94,7 @@ mod   ...   VUE COMPONENT HEADER
         padding-left: 10px;
         transition: 0.3s;
     }
-    .nav {
-        height: 80px;
-        text-decoration: none;
-        list-style: none;
-    }
-    .logo {
+    .headlogo {
         overflow: hidden;
         a {
             display: block;
@@ -121,8 +150,14 @@ mod   ...   VUE COMPONENT HEADER
                     500px 0 0 $color-gpmania-secondary inset;
                     padding: 17px 20px 23px 20px;
                 }
+                &:active {
+                    font-weight: 700;
+                }
             }
         }
+    }
+    .active {
+        font-weight: 700;
     }
     .hamburger {
         position: relative;
@@ -166,7 +201,7 @@ mod   ...   VUE COMPONENT HEADER
         display: none;
     }
     @media screen and (max-width: 688px) {
-        .wrapper {
+        .headwrapper {
             padding-right: 1rem;
         }
         .hamburger,

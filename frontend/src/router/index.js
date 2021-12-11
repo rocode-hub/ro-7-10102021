@@ -8,6 +8,8 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
 import Pubnew from '../views/Pubnew'
+import Account from '../views/Account'
+import Admin from '../views/Admin'
 
 Vue.use(VueRouter)
 
@@ -26,6 +28,16 @@ const routes = [
         name: 'pubnew',
         path: '/home/pubnew', 
         component: Pubnew
+    },
+    {
+        name: 'account',
+        path: '/account', 
+        component: Account
+    },
+    {
+        name: 'admin',
+        path: '/admin', 
+        component: Admin
     },
 ]
 

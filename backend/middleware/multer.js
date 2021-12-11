@@ -6,9 +6,10 @@ mod   ...   FILE DOWNLOAD MODULE
 const multer = require('multer');
 
 const MIME_TYPES = {
+    'image/png': 'png',
+    'image/gif': 'gif',
     'image/jpg': 'jpg',
-    'image/jpeg': 'jpg',
-    'image/png': 'png'
+    'image/jpeg': 'jpg'
 };
 
 const storage = multer.diskStorage({

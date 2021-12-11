@@ -7,8 +7,8 @@ const express = require('express');                     // express
 require('dotenv').config();                             // variables d'environnement
 const path = require('path');
 
-const usersRoutes = require('./routes/users');
-const pubsRoutes = require('./routes/pubs');
+const usersRoutes = require('./routes/user');
+const pubsRoutes = require('./routes/pub');
 
 // CORS
 const app = express();
@@ -23,7 +23,7 @@ app.use(
 
 app.use(express.json());                                // parser
 
-app.use('/picspubs', express.static(path.join(__dirname, 'pics/pubs')));
+app.use('/picspub', express.static(path.join(__dirname, 'pics/pub')));
 app.use('/api/users', usersRoutes);
 app.use('/api/pubs', pubsRoutes);
 //app.use('api/answ', answRoutes);

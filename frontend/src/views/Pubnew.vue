@@ -7,15 +7,15 @@ mod   ...   VUE VIEW PUBLICATION NEW
     <div class="fullview">
         <Header></Header>
         <FormulateForm
-            class="wrapper mt0400"
+            class="wrapper mt1000"
             id="newpubform"
             name="newpub"
             v-model="valuesPub"
-            @submit="publish"
+            @submit="clickPublish"
         >
             <div class="card">
                 <h1 class="formtitle">NOUVELLE PUBLICATION</h1>
-                <FormulateInput class="inputspec"
+                <FormulateInput class="m1000"
                     autofocus
                     name="title"
                     type="text"
@@ -26,20 +26,23 @@ mod   ...   VUE VIEW PUBLICATION NEW
                         required: `Vous devez saisir un titre.`,
                     }"
                 />
-                <FormulateInput class="inputspec"
+                <FormulateInput class="m1000"
                     name="message"
                     type="textarea"
                     label="Message"
                     placeholder="optionnel"
                 />
-                <FormulateInput class="inputspec"
+                <FormulateInput class="m1000"
                     type="image"
                     name="mediafile"
                     label="Image"
-                    help="Vous pouvez sélectionner une image au format png, jpg ou gif."
-                    validation="mime:image/jpeg,image/png,image/gif"
+                    help="Vous ne pouvez sélectionner ( optionnel ) qu'une image au format PNG, GIF, JPG ou JPEG."
+                    validation="mime:image/jpg,image/jpeg,image/png,image/gif"
+                    :validation-messages="{
+                        mime: `Le fichier sélectionné n'a pas un format attendu.`,
+                    }"
                 />
-                <div class="inputspec btnspec">
+                <div class="btnspec m1000">
                     <FormulateInput
                         type="submit"
                         label="publier"
@@ -65,8 +68,43 @@ mod   ...   VUE VIEW PUBLICATION NEW
             }
         },
         methods: {
-            publish() {
-
+            clickPublish() {
+                const optionsFetch = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    },
+                    body: JSON.stringify({
+                        email: this.valuesLogin.email,
+                        pwd: this.valuesLogin.pwd,
+                        mode: this.startMode,
+                    }),
+                };
+                this.$store.dispatch( 'LOGSIGN', optionsFetch )
+                    .then ( response => {
+                        if (response.status === 200) {
+                            if ( this.startMode ) {
+                                localStorage.setItem('nav', 1);
+                                this.$router.push('/home');
+                            } else {
+                                alert( 'Le compte est créé.\n'
+                                     + 'Vous allez recevoir un mail de confirmation.\n'
+                                     + 'Vous pouvez dès à présent vous connecter.'); 
+                                this.$router.go();
+                           } 
+                        }
+                    })
+                    .catch ( err => {
+                        if (err === 400) {
+                            alert( 'Un compte avec ce login existe déjà !' );
+                        } else if (err === 401) {
+                            alert( 'Les identifiants saisis sont invalides' );
+                        } else {
+                            alert( 'Erreur interne. La requête n\'a pas aboutie.\n'
+                                 + 'Veuillez réessayer s\'il vous plaît.');
+                        }
+                        this.$router.go();
+                    })
             }
         }
     }
@@ -74,17 +112,6 @@ mod   ...   VUE VIEW PUBLICATION NEW
 
 <style lang="scss">
     @import "../assets/css/variables";
-    .card {
-        width: 90%;
-        margin: 0 auto;
-        padding: 0.4rem;
-        background: $color-gpmania-back-primary;
-        border: 1px solid gainsboro;
-        border-radius: 0.2rem;
-    }
-    .inputspec {
-        margin: 1rem;
-    }
     .formulate-input .formulate-input-element {
         max-width: 60em;
     }

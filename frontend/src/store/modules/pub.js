@@ -31,37 +31,37 @@ const mutations = {
 const actions = {
 
     /* --------------------------------------------------------------------------------
-        name ...  RESETSTATE
-        obj  ...  Mise à zéro du State
+    name ...  RESETSTATE
+    obj  ...  Mise à zéro du State
     -------------------------------------------------------------------------------- */
     RESETSTATE( { commit } ) {
         commit('RESET_STATE')
     },
 
     /* --------------------------------------------------------------------------------
-        name ...  LOGSIGN
-        obj  ...  Authentification ou création d'un utilisateur
-        in   ...  optionsFetch {...}
-                        email,
-                        pwd,
-                        mode : true > login / false > signup
-        out  ...  payload {...}
-                        userId,
-                        userAdmin,
-                        token
+    name ...  LOGSIGN
+    obj  ...  Authentification ou création d'un utilisateur
+    in   ...  optionsFetch {...}
+                    email,
+                    pwd,
+                    mode : true > login / false > signup
+    out  ...  payload {...}
+                    userId,
+                    userAdmin,
+                    token
     -------------------------------------------------------------------------------- */
     LOGSIGN ( { commit }, optionsFetch ) {
-        const mode = JSON.parse(optionsFetch.body).mode;
-        const url = 'http://localhost:3000/api/users/' + ((mode) ? 'login' : 'signup');
+        const mode = JSON.parse( optionsFetch.body ).mode;
+        const url = 'http://localhost:3000/api/users/' + (( mode ) ? 'login' : 'signup');
         return new Promise( ( resolve, reject ) => {
             return fetch( url, optionsFetch )
                 .then( response => {
                     if( response.ok ) {
                         if ( mode ) {
                             response.json()
-                                .then( data => {
-                                    commit( 'STORE_USERLOGGED', data );
-                                });
+                            .then( data => {
+                                commit( 'STORE_USERLOGGED', data );
+                            });
                         }
                         resolve( { status: 200 } );
                     } else {
@@ -70,7 +70,7 @@ const actions = {
                 })
                 .catch( error => reject( error ))
         });
-    },
+    }
 }
 
 export default {

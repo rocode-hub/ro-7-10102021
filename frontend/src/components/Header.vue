@@ -17,7 +17,7 @@ mod   ...   VUE COMPONENT HEADER
                 <ul class="menu">
                     <li><a href="#" @click="navdest(1)">Accueil</a></li>
                     <li><a href="#" @click="navdest(2)">Compte</a></li>
-                    <li v-if="currentUser.isadmin" href="#" @click="navdest(3)"><a>Administration</a></li>
+                    <li v-if="currentUser.isadmin"><a href="#" @click="navdest(3)">Administration</a></li>
                     <li><a href="#" @click="navdest(4)">Déconnexion</a></li>
                 </ul>
             </nav>
@@ -50,22 +50,26 @@ mod   ...   VUE COMPONENT HEADER
                     case 2 :
                         if (currentnav != 2) {
                             localStorage.setItem('nav', 2);
+                            this.$router.push('/account');
                         }
                         break;
                     case 3 :
                         if (currentnav != 3) {
                             localStorage.setItem('nav', 3);
+                            this.$router.push('/admin');
                         }
                         break;
                     case 4 :
-                        this.$store.dispatch('RESETSTATE')
-                            .then( () => {
-                                localStorage.clear();
-                                this.$router.push('/')
-                                    .then( () => {
-                                        this.$router.go();
-                                    })
-                            })
+                        if (confirm('Est-ce que vous confirmez la déconnexion ?')) {
+                            this.$store.dispatch('RESETSTATE')
+                                .then( () => {
+                                    localStorage.clear();
+                                    this.$router.push('/')
+                                        .then( () => {
+                                            this.$router.go();
+                                        })
+                                })
+                        }
                 }
             }
         }

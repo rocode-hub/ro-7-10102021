@@ -6,8 +6,8 @@ mod   ...   VUE VIEW HOME
 <template>
     <div class="fullview">
         <Header></Header>
-        <div class="wrapper mt0400">
-            <h1 class="pagetitle">FORUM DES PUBLICATIONS</h1>
+        <div class="wrapper">
+            <h1 class="pagetitle mv1000">FORUM DES PUBLICATIONS</h1>
             <FormulateInput
                 type="button"
                 label="ajouter une nouvelle publication"

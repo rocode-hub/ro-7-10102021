@@ -75,14 +75,17 @@ mod   ...   VUE APP
         flex-direction: column;
         align-items: center;
     }
-    .mt0400 {
-        margin-top: 0.4rem;
+    .m1000 {
+        margin: 1rem;
+    }
+    .mt1000 {
+        margin-top: 1rem;
     }
     .pagetitle {
         width: 96%;
+        margin: 1rem 0;
         padding: 0 1rem 0.2rem;
         border-bottom: 1px solid $color-gpmania-text-primary;
-        margin-bottom: 1rem;
     }
     .formtitle {
         padding: 0 1rem 0.2rem;

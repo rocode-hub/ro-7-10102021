@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------------
 app   ...   Groupomania intra social network
-mod   ...   USERS CONTROLLERS
+mod   ...   USER CONTROLLERS
 -------------------------------------------------------------------------------- */
 
 const bcrypt = require('bcrypt');

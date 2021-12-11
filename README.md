@@ -37,10 +37,10 @@ Réaliser un MVP ( Produit Minimal Viable ) pour la création d’un réseau soc
 
 ##### <ins>Le backend</ins>
 
-- 
+- Dans une fenêtre commande lancez `nodemon server`
 
 
 
 ##### <ins>Le frontend</ins>
 
-- 
+- Dans une fenêtre commande lancez `npm run serve`

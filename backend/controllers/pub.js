@@ -1,9 +1,8 @@
 /* --------------------------------------------------------------------------------
 app   ...   Groupomania intra social network
-mod   ...   PUBLICATIONS CONTROLLERS
+mod   ...   PUBLICATION CONTROLLERS
 -------------------------------------------------------------------------------- */
 
-const jsonwt = require('jsonwebtoken');
 const db = require('../dbmysql');
 const fs = require('fs');
 

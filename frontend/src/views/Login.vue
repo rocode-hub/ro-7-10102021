@@ -7,7 +7,7 @@ mod   ...   VUE VIEW LOGIN
     <FormulateForm
         id="loginform"
         name="login"
-        v-model="valuesLogin"
+        v-model="formValues"
         @submit="clickLogin"
     >
         <div class="loginlogo">
@@ -81,7 +81,7 @@ mod   ...   VUE VIEW LOGIN
         data: function () {
             return {
                 startMode: true,        // mode : true connexion / false create account
-                valuesLogin: {
+                formValues: {
                     email: '',
                     pwd: '',
                     pwdconfirm:'',
@@ -96,7 +96,7 @@ mod   ...   VUE VIEW LOGIN
                 this.startMode = true;
             },
             clickLogin() {
-                if ( !this.startMode && !( this.valuesLogin.pwd === this.valuesLogin.pwdconfirm )) {
+                if ( !this.startMode && !( this.formValues.pwd === this.formValues.pwdconfirm )) {
                     alert( 'Les mots de passe saisis sont différents !');
                     return;
                 }
@@ -106,8 +106,8 @@ mod   ...   VUE VIEW LOGIN
                         'Content-Type': 'application/json; charset=UTF-8'
                     },
                     body: JSON.stringify({
-                        email: this.valuesLogin.email,
-                        pwd: this.valuesLogin.pwd,
+                        email: this.formValues.email,
+                        pwd: this.formValues.pwd,
                         mode: this.startMode,
                     }),
                 };

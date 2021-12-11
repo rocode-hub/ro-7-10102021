@@ -10,14 +10,15 @@ const fs = require('fs');
 -------------------------------------------------------------------------------- */
 exports.newPub = (req, res, next) => {
 
-    const sqlcase = (req.file) ? ', ?)' : ')';
-    const sqltext = 'INSERT INTO pubs VALUES (?, ?, ?, ?, ?' + sqlcase;
+    const sqltext = 'INSERT INTO pubs (title, photo, description, userid, createat, updateat) VALUES (?, ?, ?, ?, ?, ?)';
     const createat = new Date();
 
     // valeurs
     let sqlparams = [ req.body.title ];
     if (req.file) {
         sqlparams.push( `${req.protocol}://${req.get('host')}/picspubs/${req.file.filename}` );
+    } else {
+        sqlparams.push('');    
     }
     sqlparams.push( req.body.description);
     sqlparams.push( req.body.userId);
@@ -69,5 +70,20 @@ exports.newAns = (req, res, next) => {
             })
             return res.status(201).json({ message: 'Réponse créée' });
         })
+    })
+};
+
+/* Lecture ( id = 0 > tous les publications )
+-------------------------------------------------------------------------------- */
+exports.getPub = (req, res, next) => {
+
+    const sqltext = 'SELECT id, title, photo, description, userid, createat, updateat FROM pubs ORDER BY updateat;';
+
+    db.query(sqltext, (err, rows) => {
+        if (err) {        
+            return res.status(400).json({ err });
+        } else {
+            return res.status(200).json({ publist:rows });
+        }
     })
 };

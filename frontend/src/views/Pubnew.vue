@@ -55,6 +55,7 @@ mod   ...   VUE VIEW PUBLICATION NEW
 
 <script>
     import Header from '../components/Header.vue'
+    import { mapState } from 'vuex'
     export default {
         name: 'Pubnew',
         components: { Header },
@@ -62,49 +63,44 @@ mod   ...   VUE VIEW PUBLICATION NEW
             return {
                 valuesPub: {
                     title: '',
-                    content: '',
-                    media:'',
+                    message: '',
+                    mediafile:''
                 }
             }
         },
+        computed: {
+            ...mapState({
+                currentUser: state => state.user.userLogged
+            }),
+        },
         methods: {
-            clickPublish() {
+            async clickPublish() {
                 const optionsFetch = {
                     method: 'POST',
                     headers: {
+                        'Authorization': 'Bearer ' + this.currentUser.token,
                         'Content-Type': 'application/json; charset=UTF-8'
                     },
                     body: JSON.stringify({
-                        email: this.valuesLogin.email,
-                        pwd: this.valuesLogin.pwd,
-                        mode: this.startMode,
+                        title: this.valuesPub.title,
+                        description: this.valuesPub.message,
+                        file: this.valuesPub.mediafile,
+                        userId: this.currentUser.id
                     }),
                 };
-                this.$store.dispatch( 'LOGSIGN', optionsFetch )
-                    .then ( response => {
-                        if (response.status === 200) {
-                            if ( this.startMode ) {
-                                localStorage.setItem('nav', 1);
-                                this.$router.push('/home');
-                            } else {
-                                alert( 'Le compte est créé.\n'
-                                     + 'Vous allez recevoir un mail de confirmation.\n'
-                                     + 'Vous pouvez dès à présent vous connecter.'); 
-                                this.$router.go();
-                           } 
+                const url = 'http://localhost:3000/api/pubs/new';
+                return fetch( url, optionsFetch )
+                    .then( res => {
+                        if(res.ok) {
+                            localStorage.setItem('nav', 1);
+                            this.$router.push('/home');
                         }
                     })
-                    .catch ( err => {
-                        if (err === 400) {
-                            alert( 'Un compte avec ce login existe déjà !' );
-                        } else if (err === 401) {
-                            alert( 'Les identifiants saisis sont invalides' );
-                        } else {
-                            alert( 'Erreur interne. La requête n\'a pas aboutie.\n'
-                                 + 'Veuillez réessayer s\'il vous plaît.');
-                        }
-                        this.$router.go();
-                    })
+                    .catch( err => {
+                        console.log(err);
+                        alert( 'Erreur interne. La requête n\'a pas aboutie.\n'
+                             + 'Veuillez réessayer s\'il vous plaît.');
+                   })
             }
         }
     }

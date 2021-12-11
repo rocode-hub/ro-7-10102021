@@ -4,9 +4,9 @@ mod   ...   VUE COMPONENT USER CARD
 ------------------------------------------------------------------------------- -->
 
 <template>
-    <a class="row" href="#" @click="goAccount()">
-        <p class="rowcol1">{{userRow.email}}</p>
-        <p class="rowcol2">{{userAdmin}}</p>
+    <a class="userrow" href="#" @click="goAccount()">
+        <p class="userrowcol1">{{userRow.email}}</p>
+        <p class="userrowcol2">{{userAdmin}}</p>
     </a>
 </template>
 
@@ -39,7 +39,7 @@ mod   ...   VUE COMPONENT USER CARD
 
 <style lang="scss">
     @import "../assets/css/variables";
-    .row {
+    .userrow {
         color: $color-gpmania-text-primary;
         margin: 0.4rem 1rem;
         padding: 0.4rem;
@@ -52,7 +52,7 @@ mod   ...   VUE COMPONENT USER CARD
             background: $color-gpmania-secondary;
         }
     }
-    .rowcol1 {
+    .userrowcol1 {
         font-weight: 500;
         font-style: italic;
         flex: 1;
@@ -60,7 +60,7 @@ mod   ...   VUE COMPONENT USER CARD
         white-space: nowrap;
         text-overflow: ellipsis;
     }
-    .rowcol2 {
+    .userrowcol2 {
         width: 60px;
         color: $color-gpmania-tertiary;
         text-align: end;

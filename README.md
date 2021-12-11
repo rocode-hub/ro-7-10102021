@@ -44,3 +44,9 @@ Réaliser un MVP ( Produit Minimal Viable ) pour la création d’un réseau soc
 ##### <ins>Le frontend</ins>
 
 - Dans une fenêtre commande lancez `npm run serve`
+
+
+
+##### <ins>Le navigateur</ins>
+
+- Url : `http://localhost:8080/`

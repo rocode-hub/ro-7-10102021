@@ -50,7 +50,7 @@ mod   ...   VUE COMPONENT HEADER
                     case 2 :
                         if (currentnav != 2) {
                             localStorage.setItem('nav', 2);
-                            this.$router.push('/account');
+                            this.$router.push({ name: 'account', params: { id: this.currentUser.id }});
                         }
                         break;
                     case 3 :
@@ -153,9 +153,6 @@ mod   ...   VUE COMPONENT HEADER
                     box-shadow: 0 -4px 0 $color-gpmania-primary inset,
                     500px 0 0 $color-gpmania-secondary inset;
                     padding: 17px 20px 23px 20px;
-                }
-                &:active {
-                    font-weight: 700;
                 }
             }
         }

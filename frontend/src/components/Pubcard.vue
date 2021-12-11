@@ -16,7 +16,11 @@ mod   ...   VUE COMPONENT PUBLICATION CARD
         name: 'Pubcard',
         data: function () {
             return {}
+        },
+        props: {
+            
         }
+
     }
 </script>
 

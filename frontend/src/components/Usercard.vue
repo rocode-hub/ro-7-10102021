@@ -4,9 +4,10 @@ mod   ...   VUE COMPONENT USER CARD
 ------------------------------------------------------------------------------- -->
 
 <template>
-    <div class="card">
-        <p class="userlogin">{{userRow.email}} - {{userAdmin}}</p>
-    </div>
+    <a class="row" href="#" @click="goAccount()">
+        <p class="rowcol1">{{userRow.email}}</p>
+        <p class="rowcol2">{{userAdmin}}</p>
+    </a>
 </template>
 
 <script>
@@ -24,7 +25,13 @@ mod   ...   VUE COMPONENT USER CARD
         },
         computed: {
             userAdmin: function () {
-                return (this.userRow.isadmin) ? 'administrateur' : '';
+                return (this.userRow.isadmin) ? 'admin' : '';
+            }
+        },
+        methods: {
+            goAccount() {
+                localStorage.setItem('nav', 0);
+                this.$router.push({name: 'account', params: { id: this.userRow.id }} );
             }
         }
     }
@@ -32,16 +39,30 @@ mod   ...   VUE COMPONENT USER CARD
 
 <style lang="scss">
     @import "../assets/css/variables";
-    .user {
-        font-size: 0.7rem;
-        font-style: italic;
-        color: $color-gpmania-back-tertiary;
-    }
-    .message {
-        width: 100%;
+    .row {
+        color: $color-gpmania-text-primary;
+        margin: 0.4rem 1rem;
         padding: 0.4rem;
-        font-size: 0.9rem;
         background: $color-gpmania-back-secondary;
-        border-radius: 0.2rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: right;
+        text-decoration: none;
+        &:hover {
+            background: $color-gpmania-secondary;
+        }
+    }
+    .rowcol1 {
+        font-weight: 500;
+        font-style: italic;
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .rowcol2 {
+        width: 60px;
+        color: $color-gpmania-tertiary;
+        text-align: end;
     }
 </style>

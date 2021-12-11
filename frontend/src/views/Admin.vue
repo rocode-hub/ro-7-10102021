@@ -9,7 +9,7 @@ mod   ...   VUE VIEW PUBLICATION NEW
         <div class="wrapper mt1000">
             <div class="card">
                 <h1 class="formtitle">ADMINISTRATION - GESTION DES UTILISATEURS</h1>
-                <UserCard v-for="item in userList" v-bind:userRow=item :key=item.id />
+                <UserCard v-for="item in userList" v-bind:userRow="item" :key="item.id"></UserCard>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@ mod   ...   VUE VIEW PUBLICATION NEW
             this.getUsers();
         },
         methods: {
-            getUsers() {
+            async getUsers() {
                 const optionsFetch = {
                     method: 'POST',
                     headers: {

@@ -31,8 +31,9 @@ const routes = [
     },
     {
         name: 'account',
-        path: '/account', 
-        component: Account
+        path: '/account/:id', 
+        component: Account,
+        props: true
     },
     {
         name: 'admin',

@@ -5,7 +5,7 @@ mod   ...   VUE VIEW PUBLICATION NEW
 
 <template>
     <div class="fullview">
-        <Header/>
+        <Header />
         <div class="wrapper mt1000">
             <div class="card">
                 <h1 class="formtitle">ADMINISTRATION - GESTION DES UTILISATEURS</h1>

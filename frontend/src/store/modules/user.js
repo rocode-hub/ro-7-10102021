@@ -34,7 +34,7 @@ const actions = {
         name ...  RESETSTATE
         obj  ...  Mise à zéro du State
     -------------------------------------------------------------------------------- */
-    RESETSTATE( { commit } ) {
+    RESETSTATE({ commit }) {
         commit('RESET_STATE')
     },
 
@@ -50,22 +50,24 @@ const actions = {
                         userAdmin,
                         token
     -------------------------------------------------------------------------------- */
-    LOGSIGN ( { commit }, optionsFetch ) {
+    async LOGSIGN ( { commit }, optionsFetch ) {
         const mode = JSON.parse(optionsFetch.body).mode;
         const url = 'http://localhost:3000/api/users/' + ((mode) ? 'login' : 'signup');
-        return new Promise( ( resolve, reject ) => {
+        return new Promise(( resolve, reject ) => {
             return fetch( url, optionsFetch )
                 .then( response => {
-                    if( response.ok ) {
-                        if ( mode ) {
+                    if (response.ok) {
+                        if (mode) {
                             response.json()
                                 .then( data => {
                                     commit( 'STORE_USERLOGGED', data );
-                                });
+                                    resolve({ status: 200 });
+                                })
+                        } else {
+                            resolve({ status: 200 });
                         }
-                        resolve( { status: 200 } );
                     } else {
-                        reject( response.status );
+                        reject(response.status);
                     }
                 })
                 .catch( error => reject( error ))

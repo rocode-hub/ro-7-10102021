@@ -7,9 +7,7 @@ mod   ...   VUE COMPONENT HEADER
     <header>
         <div class="headwrapper">
             <div class="headlogo">
-                <a href="#">
-                    <img src="../assets/pics/icon-left-font.svg" />
-                </a>
+                <img src="../assets/pics/icon-left-font.svg" />
             </div>
             <nav>
                 <input type="checkbox" class="switch">
@@ -100,15 +98,12 @@ mod   ...   VUE COMPONENT HEADER
     }
     .headlogo {
         overflow: hidden;
-        a {
+        img {
             display: block;
-            img {
-                display: block;
-                width: 256px;
-                margin-top: -6.5rem;
-                margin-left: -2rem;
-                margin-bottom: -6.5rem;
-            }
+            width: 256px;
+            margin-top: -6.5rem;
+            margin-left: -2rem;
+            margin-bottom: -6.5rem;
         }
     }
     nav {

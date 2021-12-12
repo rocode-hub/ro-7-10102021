@@ -75,7 +75,7 @@ mod   ...   VUE VIEW LOGIN
 </template>
 
 <script>
-
+    import { mapState } from 'vuex'
     export default {
         name: 'Login',
         data: function () {
@@ -87,6 +87,11 @@ mod   ...   VUE VIEW LOGIN
                     pwdconfirm:'',
                 }
             }
+        },
+        computed: {
+            ...mapState({
+                currentUser: state => state.user.userLogged
+            }),
         },
         methods: {
             switchToCreateAccount() {

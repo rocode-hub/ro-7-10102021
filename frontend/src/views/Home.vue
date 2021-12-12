@@ -5,7 +5,7 @@ mod   ...   VUE VIEW HOME
 
 <template>
     <div class="fullview">
-        <Header></Header>
+        <Header />
         <div class="wrapper">
             <h1 class="pagetitle mv1000">FORUM DES PUBLICATIONS</h1>
             <FormulateInput
@@ -76,7 +76,4 @@ mod   ...   VUE VIEW HOME
 
 <style lang="scss">
     @import "../assets/css/variables";
-    h1 {
-        font-size: 1.2rem;
-    }
 </style>

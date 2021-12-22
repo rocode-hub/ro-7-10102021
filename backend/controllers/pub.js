@@ -16,7 +16,9 @@ exports.newPub = (req, res, next) => {
     // valeurs
     let sqlparams = [ req.body.title ];
     if (req.file) {
-        sqlparams.push( `${req.protocol}://${req.get('host')}/picspubs/${req.file.filename}` );
+        const imageUrl = `${req.protocol}://${req.get('host')}/picspubs/${req.file.filename}`;
+        console.log(imageUrl);
+        //sqlparams.push( `${req.protocol}://${req.get('host')}/picspubs/${req.file.filename}` );
     } else {
         sqlparams.push('');    
     }

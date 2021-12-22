@@ -4,12 +4,13 @@ mod   ...   VUE VIEW LOGIN
 ------------------------------------------------------------------------------- -->
 
 <template>
-    <FormulateForm
+    <FormulateForm class="fade"
         id="loginform"
         name="login"
         v-model="formValues"
         @submit="clickLogin"
     >
+        <Dataclear />
         <div class="loginlogo">
             <img src="../assets/pics/icon-above-font.svg" />
         </div>
@@ -75,9 +76,11 @@ mod   ...   VUE VIEW LOGIN
 </template>
 
 <script>
+    import Dataclear from '../components/Dataclear.vue'
     import { mapState } from 'vuex'
     export default {
         name: 'Login',
+        components: { Dataclear },
         data: function () {
             return {
                 startMode: true,        // mode : true connexion / false create account

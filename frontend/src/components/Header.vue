@@ -13,7 +13,8 @@ mod   ...   VUE COMPONENT HEADER
                 <input type="checkbox" class="switch">
                 <div class="hamburger"></div>
                 <ul class="menu">
-                    <li><a href="#" @click="navdest(1)">Accueil</a></li>
+                    <!--li><a href="#" @click="navdest(1)">Accueil</a></li-->
+                    <li><router-link :to="{ name: 'home' }">Accueil</router-link></li>
                     <li><a href="#" @click="navdest(2)">Compte</a></li>
                     <li v-if="currentUser.isadmin"><a href="#" @click="navdest(3)">Administration</a></li>
                     <li><a href="#" @click="navdest(4)">Déconnexion</a></li>
@@ -59,14 +60,9 @@ mod   ...   VUE COMPONENT HEADER
                         break;
                     case 4 :
                         if (confirm('Est-ce que vous confirmez la déconnexion ?')) {
-                            this.$store.dispatch('RESETSTATE')
-                                .then( () => {
-                                    localStorage.clear();
-                                    this.$router.push('/')
-                                        .then( () => {
-                                            this.$router.go();
-                                        })
-                                })
+                            this.$router.push({
+                                name: 'login'
+                            });
                         }
                 }
             }

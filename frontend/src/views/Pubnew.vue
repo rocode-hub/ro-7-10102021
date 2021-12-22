@@ -64,7 +64,7 @@ mod   ...   VUE VIEW PUBLICATION NEW
                 valuesPub: {
                     title: '',
                     message: '',
-                    mediafile:''
+                    mediafile: null
                 }
             }
         },
@@ -75,6 +75,8 @@ mod   ...   VUE VIEW PUBLICATION NEW
         },
         methods: {
             async clickPublish() {
+                const path = await this.valuesPub.mediafile.upload()
+                console.log(path[0].url);
                 const optionsFetch = {
                     method: 'POST',
                     headers: {
@@ -84,7 +86,7 @@ mod   ...   VUE VIEW PUBLICATION NEW
                     body: JSON.stringify({
                         title: this.valuesPub.title,
                         description: this.valuesPub.message,
-                        file: this.valuesPub.mediafile,
+                        //file: this.valuesPub.mediafile,
                         userId: this.currentUser.id
                     }),
                 };

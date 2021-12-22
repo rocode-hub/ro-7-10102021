@@ -32,7 +32,7 @@ mod   ...   VUE APP
     html {
         scroll-behavior: smooth;
     }
-    body {
+    .fade {
         animation: fadeIn ease 600ms;
         animation-iteration-count: 1;
         animation-fill-mode: forwards;
